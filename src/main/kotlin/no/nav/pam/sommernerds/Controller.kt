@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class testController {
-    @GetMapping(value = ["/hello"]) //@RequestMapping(value="/",method=RequestMethod.GET)
+
+    @GetMapping(value = ["/hello"]) // @RequestMapping(value="/",method=RequestMethod.GET)
     fun hello(): String {
+
         return "Hello World!!"
     }
 }
-
