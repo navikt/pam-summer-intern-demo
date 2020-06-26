@@ -10,7 +10,13 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 
-@JacksonXmlRootElement(localName = "Renholdsvirksomhet")
+@JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
+data class rot(
+        @JacksonXmlProperty(isAttribute = false, localName = "Renholdsvirksomhet")
+        var bedrifter: List<Renhold>
+)
+
+
 data class Renhold(
         @JacksonXmlProperty(isAttribute = false, localName = "Organisasjonsnummer")
         var orgnr: Int?,
@@ -27,6 +33,8 @@ fun main(args: Array<String>) {
             .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val rsc = Renhold::class.java.getResource("/test.xml")
-    println(mapper.readValue(rsc, Renhold::class.java))
+    //val rsc = Renhold::class.java.getResource("/test2.xml")
+    val url = URL("https://www.arbeidstilsynet.no/opendata/renhold.xml")
+    val test = mapper.readValue(url, rot::class.java).bedrifter.filter{it.orgnr == 943001820}
+    print(test)
 }
