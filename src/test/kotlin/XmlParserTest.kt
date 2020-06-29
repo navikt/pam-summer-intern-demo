@@ -32,9 +32,4 @@ class XmlParserTest {
     fun `verifiser under behandling bedrift`() {
         assertEquals(findBedrift(993096202, "/renhold.xml"), "Under behandling")
     }
-
-    @Test
-    fun `math`() {
-        assertEquals(2, 2)
-    }
 }
