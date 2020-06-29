@@ -16,7 +16,7 @@ data class rot(
 
 data class Renhold(
     @JacksonXmlProperty(isAttribute = false, localName = "Organisasjonsnummer")
-    val orgnr: Int,
+    val orgnr: String,
 
     @JacksonXmlProperty(isAttribute = false, localName = "Status")
     val status: String,
@@ -33,11 +33,11 @@ data class Underavdeling(
 
 data class Avdeling(
     @JacksonXmlProperty(isAttribute = false, localName = "Organisasjonsnummer")
-    val avdorgnr: Int
+    val avdorgnr: String
 
 )
 
-fun findBedrift(orgnummer: Int, path: String): String {
+fun findBedrift(orgnummer: String, path: String): String {
     val mapper = XmlMapper(
         JacksonXmlModule().apply {
             setDefaultUseWrapper(false)
@@ -63,7 +63,7 @@ fun findBedrift(orgnummer: Int, path: String): String {
 }
 
 fun main(args: Array<String>) {
-    println(findBedrift(952283200, "/renhold.xml"))
+    println(findBedrift("952283200", "/renhold.xml"))
 
-    println(findBedrift(972094722, "/renhold.xml"))
+    println(findBedrift("972094722", "/renhold.xml"))
 }

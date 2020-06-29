@@ -1,0 +1,46 @@
+<ArrayOfRenholdsvirksomhet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>983068824</Organisasjonsnummer>
+        <Navn>TIP TOP RENHOLD AS</Navn>
+        <Adresse>
+            <Gateadresse>Østlifaret 9</Gateadresse>
+            <Postnummer>1476</Postnummer>
+            <Poststed>RASTA</Poststed>
+            <Kommunenummer>3029</Kommunenummer>
+            <Kommune>LØRENSKOG</Kommune>
+            <Fylkesnummer>30</Fylkesnummer>
+            <Fylke>Viken</Fylke>
+        </Adresse>
+        <Underavdelinger>
+            <Avdeling>
+                <Organisasjonsnummer>974694722</Organisasjonsnummer>
+                <Navn>TIP TOP RENHOLD AS</Navn>
+                <Adresse>
+                    <Gateadresse>Østlifaret 9</Gateadresse>
+                    <Postnummer>1476</Postnummer>
+                    <Poststed>RASTA</Poststed>
+                    <Kommunenummer>3029</Kommunenummer>
+                    <Kommune>LØRENSKOG</Kommune>
+                    <Fylkesnummer>30</Fylkesnummer>
+                    <Fylke>Viken</Fylke>
+                </Adresse>
+            </Avdeling>
+        </Underavdelinger>
+        <Status>Godkjent med ansatte</Status>
+    </Renholdsvirksomhet>
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>928945792</Organisasjonsnummer>
+        <Navn>SNEHVIT HOLDING AS</Navn>
+        <Adresse>
+            <Gateadresse>c/o Centrum Vinduspuss og Rengjørin Schweigaards gate 34F</Gateadresse>
+            <Postnummer>0191</Postnummer>
+            <Poststed>OSLO</Poststed>
+            <Kommunenummer>0301</Kommunenummer>
+            <Kommune>OSLO</Kommune>
+            <Fylkesnummer>3</Fylkesnummer>
+            <Fylke>Oslo</Fylke>
+        </Adresse>
+        <Underavdelinger/>
+        <Status>Ikke godkjent</Status>
+    </Renholdsvirksomhet>
+</ArrayOfRenholdsvirksomhet>
