@@ -5,19 +5,36 @@ import org.junit.jupiter.api.Test
 class XmlParserTest {
     @Test
     fun `verifiser godkjent bedrift`() {
-        val noe = javaClass.getResource("/TestData.xml").readText()
-        assertEquals(findBedrift(972094722, noe), "Godkjent med ansatte")
+        assertEquals(findBedrift(972094722, "/renhold.xml"), "Godkjent med ansatte")
     }
 
     @Test
     fun `verifiser ukjent bedrift`() {
-        val noe = javaClass.getResource("/TestData.xml").readText()
-        assertEquals(findBedrift(69420, noe), "Ikke renholdsbedrift")
+        assertEquals(findBedrift(69420, "/renhold.xml"), "Ikke renholdsbedrift")
     }
 
     @Test
     fun `verifiser ulovlig bedrift`() {
-        val noe = javaClass.getResource("/TestData.xml").readText()
-        assertEquals(findBedrift(958942192, noe), "Ikke godkjent")
+        assertEquals(findBedrift(958942192, "/renhold.xml"), "Ikke godkjent")
+    }
+
+    @Test
+    fun `verifiser godkjent uten ansatte bedrift`() {
+        assertEquals(findBedrift(979952562, "/renhold.xml"), "Godkjent uten ansatte")
+    }
+
+    @Test
+    fun `verifiser HMS-kort bedrift`() {
+        assertEquals(findBedrift(996168484, "/renhold.xml"), "Under HMS-kortbestilling")
+    }
+
+    @Test
+    fun `verifiser under behandling bedrift`() {
+        assertEquals(findBedrift(993096202, "/renhold.xml"), "Under behandling")
+    }
+
+    @Test
+    fun `math`() {
+        assertEquals(2, 2)
     }
 }
