@@ -7,7 +7,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import java.net.URL
 
 @JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
 data class rot(
@@ -38,7 +37,7 @@ data class Avdeling(
 
 )
 
-fun findBedrift(orgnummer: Int, xml: String): String {
+fun findBedrift(orgnummer: Int, path: String): String {
     val mapper = XmlMapper(
         JacksonXmlModule().apply {
             setDefaultUseWrapper(false)
@@ -47,9 +46,8 @@ fun findBedrift(orgnummer: Int, xml: String): String {
         .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val url = URL("https://www.arbeidstilsynet.no/opendata/renhold.xml")
-    // val test = mapper.readValue(url, rot::class.java).bedrifter.filter { it.orgnr == orgnummer }
-    val test = mapper.readValue(xml, rot::class.java).bedrifter
+    val path = rot::class.java.getResource(path)
+    val test = mapper.readValue(path, rot::class.java).bedrifter
     for (bedrift in test) {
         if (bedrift.orgnr == orgnummer) {
             return bedrift.status
@@ -65,5 +63,7 @@ fun findBedrift(orgnummer: Int, xml: String): String {
 }
 
 fun main(args: Array<String>) {
-    println(findBedrift(952283200, "/test2.xml"))
+    println(findBedrift(952283200, "/renhold.xml"))
+
+    println(findBedrift(972094722, "/renhold.xml"))
 }
