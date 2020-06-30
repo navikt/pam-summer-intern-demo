@@ -46,8 +46,8 @@ fun findBedrift(orgnummer: String, path: String): String {
         .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val path = rot::class.java.getResource(path)
-    val test = mapper.readValue(path, rot::class.java).bedrifter
+    val rsc = rot::class.java.getResource(path)
+    val test = mapper.readValue(rsc, rot::class.java).bedrifter
     for (bedrift in test) {
         if (bedrift.orgnr == orgnummer) {
             return bedrift.status
@@ -62,8 +62,35 @@ fun findBedrift(orgnummer: String, path: String): String {
     return "Ikke renholdsbedrift"
 }
 
+fun xmlToDict(path: String): Map<String, String> {
+    val mapper = XmlMapper(
+            JacksonXmlModule().apply {
+                setDefaultUseWrapper(false)
+            }
+    ).registerKotlinModule()
+            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+    val rsc = rot::class.java.getResource(path)
+    val renholdsBedrifter = mapper.readValue(rsc, rot::class.java).bedrifter
+    val bedriftMap = mutableMapOf<String, String>()
+    for (bedrift in renholdsBedrifter) {
+        val bedriftStatus = bedrift.status
+        bedriftMap[bedrift.orgnr] = bedriftStatus
+        bedrift.underavdeling?.avdelinger?.forEach() {
+            bedriftMap[it.avdorgnr] = bedriftStatus
+        }
+    }
+    return bedriftMap
+}
+
+
 fun main(args: Array<String>) {
+    /*
     println(findBedrift("952283200", "/renhold.xml"))
 
     println(findBedrift("972094722", "/renhold.xml"))
+     */
+    val dict = xmlToDict("/renhold.xml")
+    println(dict["952283200"])
 }
