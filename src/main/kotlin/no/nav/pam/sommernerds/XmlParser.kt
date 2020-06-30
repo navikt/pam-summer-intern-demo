@@ -46,8 +46,8 @@ fun findBedrift(orgnummer: String, path: String): String {
         .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val path = rot::class.java.getResource(path)
-    val test = mapper.readValue(path, rot::class.java).bedrifter
+    val rsc = rot::class.java.getResource(path)
+    val test = mapper.readValue(rsc, rot::class.java).bedrifter
     for (bedrift in test) {
         if (bedrift.orgnr == orgnummer) {
             return bedrift.status
