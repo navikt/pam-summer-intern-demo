@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="XmlParserTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-06-30T14:23:12" hostname="Martins-MacBook-Pro.local" time="0.531">
+  <properties/>
+  <testcase name="sjekk at en godkjent bedrift returnerer at den er godkjent()" classname="XmlParserTest" time="0.515"/>
+  <testcase name="sjekk at en ulovlig bedrift returnerer &quot;ikke godkjent&quot;()" classname="XmlParserTest" time="0.007"/>
+  <testcase name="sjekk at bedrift som ikke finnes i registeret returnerer at den ikke er renholdsbedrift()" classname="XmlParserTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

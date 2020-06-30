@@ -1,0 +1,29 @@
+<Renholdsvirksomhet>
+    <Organisasjonsnummer>943001820</Organisasjonsnummer>
+    <Navn>TIP TOP RENHOLD AS</Navn>
+    <Adresse>
+        <Gateadresse>Østlifaret 9</Gateadresse>
+        <Postnummer>1476</Postnummer>
+        <Poststed>RASTA</Poststed>
+        <Kommunenummer>3029</Kommunenummer>
+        <Kommune>LØRENSKOG</Kommune>
+        <Fylkesnummer>30</Fylkesnummer>
+        <Fylke>Viken</Fylke>
+    </Adresse>
+    <Underavdelinger>
+        <Avdeling>
+            <Organisasjonsnummer>972094722</Organisasjonsnummer>
+            <Navn>TIP TOP RENHOLD AS</Navn>
+            <Adresse>
+                <Gateadresse>Østlifaret 9</Gateadresse>
+                <Postnummer>1476</Postnummer>
+                <Poststed>RASTA</Poststed>
+                <Kommunenummer>3029</Kommunenummer>
+                <Kommune>LØRENSKOG</Kommune>
+                <Fylkesnummer>30</Fylkesnummer>
+                <Fylke>Viken</Fylke>
+            </Adresse>
+        </Avdeling>
+    </Underavdelinger>
+    <Status>Godkjent med ansatte</Status>
+</Renholdsvirksomhet>
