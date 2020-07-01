@@ -42,4 +42,5 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-sbs
           RESOURCE: naiserator.yml
+          VARS: naiserator-dev.json
           PRINT_PAYLOAD: true
