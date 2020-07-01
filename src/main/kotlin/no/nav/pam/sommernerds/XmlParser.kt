@@ -85,12 +85,12 @@ fun xmlToDict(path: String): Map<String, String> {
 }
 
 
-fun main(args: Array<String>) {
-    /*
+/*fun main(args: Array<String>) {
+    *//*
     println(findBedrift("952283200", "/renhold.xml"))
 
     println(findBedrift("972094722", "/renhold.xml"))
-     */
+     *//*
     val dict = xmlToDict("/renhold.xml")
     println(dict["952283200"])
-}
+}*/

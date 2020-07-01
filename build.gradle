@@ -45,7 +45,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3"
 
-    implementation 'org.apache.httpcomponents:httpclient:4.5.12'
 
 
 
@@ -87,6 +86,7 @@ compileTestKotlin {
 shadowJar {
     mergeServiceFiles()
 }
+
 
 run.classpath += configurations.developmentOnly
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')

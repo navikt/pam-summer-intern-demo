@@ -17,6 +17,6 @@ fun download(link: String, path: String) {
 
 
 
-fun main(args: Array<String>) {
+/*fun main(args: Array<String>) {
     download("https://www.arbeidstilsynet.no/opendata/renhold.xml", "src/main/resources/renhold.xml")
-}
+}*/
