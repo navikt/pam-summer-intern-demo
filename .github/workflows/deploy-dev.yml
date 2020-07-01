@@ -41,5 +41,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-sbs
-          RESOURCE: naiserator.yaml
+          RESOURCE: naiserator.yml
           PRINT_PAYLOAD: true
