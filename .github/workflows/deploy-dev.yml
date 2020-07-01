@@ -36,11 +36,6 @@ jobs:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch NAIS yaml
-        uses: actions/download-artifact@v1
-        with:
-          name: nais-yaml
-          path: nais
 
       - uses: nais/deploy/actions/deploy@v1
         env:
