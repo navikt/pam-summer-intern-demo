@@ -32,6 +32,4 @@ spec:
     enabled: true
     path: /actuator/prometheus
   ingresses:
-  {{#each ingress as |url|}}
-     - {{url}}
-  {{/each}}
+    -{{ ingress }}
