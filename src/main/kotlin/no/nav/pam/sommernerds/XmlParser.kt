@@ -7,6 +7,29 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
+
+@Configuration
+class XmlParser(map: MutableMap<String, String>) {
+    val dataContainer: DataContainer
+        @Bean
+        get() = DataContainer(xmlToDict("/renhold.xml"))
+}
+
+data class DataContainer(val dictionary: MutableMap<String, String>)
+
+
+fun downloadFromURL(link: String, path: String) {
+    URL(link).openStream().use { input ->
+        FileOutputStream(File(path)).use { output ->
+            input.copyTo(output)
+        }
+    }
+}
 
 @JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
 data class rot(
@@ -62,7 +85,7 @@ fun findBedrift(orgnummer: String, path: String): String {
     return "Ikke renholdsbedrift"
 }
 
-fun xmlToDict(path: String): Map<String, String> {
+fun xmlToDict(path: String): MutableMap<String, String> {
     val mapper = XmlMapper(
             JacksonXmlModule().apply {
                 setDefaultUseWrapper(false)
