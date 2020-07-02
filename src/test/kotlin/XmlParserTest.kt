@@ -17,4 +17,12 @@ class XmlParserTest {
     fun `sjekk at bedrift som ikke finnes i registeret returnerer at den ikke er renholdsbedrift`(){
         assertEquals(findBedrift("74094722", "/renholdTestData.xml"), "Ikke renholdsbedrift")
     }
+
+    //TODO test download
+
+    //TODO integrasjons test
+
+    //TODO test isReady & isAlive
+
+    //TODO test xml2dict
 }
