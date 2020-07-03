@@ -7,12 +7,17 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.stereotype.Component
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 
+/*
 @Configuration
 class XmlParser(map: MutableMap<String, String>) {
     val dataContainer: DataContainer
@@ -20,16 +25,43 @@ class XmlParser(map: MutableMap<String, String>) {
         get() = DataContainer(xmlToDict("/renhold.xml"))
 }
 
+ */
+
 data class DataContainer(val dictionary: MutableMap<String, String>)
 
+@Configuration
+@Component
+class DownloadRenhold {
+    var count: Int = 0
+    var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
+    var dict: MutableMap<String, String> = xmlToDict("/renhold.xml")
+    val dataContainer: DataContainer
+        @Bean
+        get() = DataContainer(dict)
 
-fun downloadFromURL(link: String, path: String) {
-    URL(link).openStream().use { input ->
-        FileOutputStream(File(path)).use { output ->
-            input.copyTo(output)
+    fun download(link: String, path: String) {
+        URL(link).openStream().use { input ->
+            FileOutputStream(File(path)).use { output ->
+                input.copyTo(output)
+            }
         }
     }
+
+    @Scheduled(fixedRate = 5000)
+    fun scheduledDL() {
+        //download("https://www.arbeidstilsynet.no/opendata/renhold.xml", "src/main/resources/renhold.xml")
+        if (count == 0) {
+            dict = xmlToDict("/renhold.xml")
+            count = 1
+        }
+        else {
+            dict = xmlToDict("/renhold2.xml")
+            count = 0
+        }
+        //logger.error("hei :)")
+    }
 }
+
 
 @JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
 data class rot(

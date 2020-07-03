@@ -12,7 +12,7 @@ class Controller {
 
     @GetMapping(value = ["/{orgnummer}"]) // @RequestMapping(value="/",method=RequestMethod.GET)
     fun hello(@PathVariable("orgnummer") nr: String): String? {
-        var actx = AnnotationConfigApplicationContext(XmlParser::class.java)
+        var actx = AnnotationConfigApplicationContext(DownloadRenhold::class.java)
         var dataContainer = actx.getBean(DataContainer::class.java)
         return dataContainer.dictionary[nr]
     }
