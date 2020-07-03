@@ -1,5 +1,6 @@
 package no.nav.pam.sommernerds
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class Controller {
 
+    @Autowired
+    var dataProvider: DownloadRenhold? = null
+
     @GetMapping(value = ["/{orgnummer}"]) // @RequestMapping(value="/",method=RequestMethod.GET)
     fun hello(@PathVariable("orgnummer") nr: String): String? {
-        var actx = AnnotationConfigApplicationContext(DownloadRenhold::class.java)
-        var dataContainer = actx.getBean(DataContainer::class.java)
-        return dataContainer.dictionary[nr]
+        val dict = dataProvider?.dataContainer?.dictionary
+        return dict?.get(nr)
     }
 
     @GetMapping("/isAlive")

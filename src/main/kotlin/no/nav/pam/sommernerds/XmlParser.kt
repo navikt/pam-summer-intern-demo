@@ -9,6 +9,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.Scheduled
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
+import javax.xml.crypto.Data
 
 /*
 @Configuration
@@ -27,17 +30,16 @@ class XmlParser(map: MutableMap<String, String>) {
 
  */
 
-data class DataContainer(val dictionary: MutableMap<String, String>)
+data class DataContainer(var dictionary: MutableMap<String, String>?)
 
-@Configuration
 @Component
 class DownloadRenhold {
     var count: Int = 0
     var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
-    var dict: MutableMap<String, String> = xmlToDict("/renhold.xml")
-    val dataContainer: DataContainer
-        @Bean
-        get() = DataContainer(dict)
+    var _dataContainer: DataContainer? = null
+    var dataContainer = _dataContainer
+        get() = _dataContainer
+
 
     fun download(link: String, path: String) {
         URL(link).openStream().use { input ->
@@ -47,20 +49,25 @@ class DownloadRenhold {
         }
     }
 
-    @Scheduled(fixedRate = 5000)
+
+    @Scheduled(fixedRate = 10000)
     fun scheduledDL() {
         //download("https://www.arbeidstilsynet.no/opendata/renhold.xml", "src/main/resources/renhold.xml")
         if (count == 0) {
-            dict = xmlToDict("/renhold.xml")
+            _dataContainer = DataContainer(xmlToDict("/renhold.xml"))
             count = 1
+            logger.error("0")
         }
         else {
-            dict = xmlToDict("/renhold2.xml")
+            _dataContainer = DataContainer(xmlToDict("/renhold2.xml"))
             count = 0
+            logger.error("1")
         }
-        //logger.error("hei :)")
     }
+
 }
+
+
 
 
 @JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
