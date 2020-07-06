@@ -15,14 +15,14 @@ class RestController {
 
     @GetMapping(value = ["/{orgnummer}"])
     fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): String? {
-        val dict = dataProvider?.dataContainer?.dictionary
+        val dict = dataProvider?.dataContainer?.data
         return dict?.get(nr)
     }
 
     @GetMapping("/isAlive")
     fun isAlive(): ResponseEntity<String> {
-        val dict = dataProvider?.dataContainer?.dictionary
-        dict.let{
+        val dict = dataProvider?.dataContainer?.data
+        dict?.let{
             return ResponseEntity("OK", HttpStatus.OK)
         }
         return ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR)

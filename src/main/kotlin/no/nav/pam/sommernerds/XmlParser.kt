@@ -8,8 +8,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
-data class DataContainer(var dictionary: MutableMap<String, String>?)
-
 @JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
 data class Rot(
     @JacksonXmlProperty(isAttribute = false, localName = "Renholdsvirksomhet")

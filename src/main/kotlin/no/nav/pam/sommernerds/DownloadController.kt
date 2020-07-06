@@ -6,12 +6,13 @@ import org.springframework.stereotype.Component
 import java.net.URL
 import java.nio.charset.Charset
 
+data class DataContainer(var data: MutableMap<String, String>?)
+
 @Component
 class DownloadRenhold {
-    var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
-    var _dataContainer: DataContainer? = null
-    var dataContainer = _dataContainer
-        get() = _dataContainer
+    //var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
+    var _dataContainer: DataContainer = DataContainer(xmlToDict(download("https://www.arbeidstilsynet.no/opendata/renhold.xml")))
+    val dataContainer = _dataContainer
 
     fun download(link: String): String {
         val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
