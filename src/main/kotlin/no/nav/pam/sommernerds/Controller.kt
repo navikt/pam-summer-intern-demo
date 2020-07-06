@@ -21,8 +21,13 @@ class Controller {
     }
 
     @GetMapping("/isAlive")
-    fun isAlive(): ResponseEntity<String> =
-            ResponseEntity("OK", HttpStatus.OK)
+    fun isAlive(): ResponseEntity<String> {
+        val dict = dataProvider?.dataContainer?.dictionary
+        dict.let{
+            return ResponseEntity("OK", HttpStatus.OK)
+        }
+        return ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR)
+    }
 
     @GetMapping("/isReady")
     fun isReady(): ResponseEntity<String> =

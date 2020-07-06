@@ -124,7 +124,7 @@ fun findBedrift(orgnummer: String, path: String): String {
     return "Ikke renholdsbedrift"
 }
 
-fun xmlToDict(path: String): MutableMap<String, String> {
+fun xmlToDict(path: String): MutableMap<String, String>? {
     val mapper = XmlMapper(
             JacksonXmlModule().apply {
                 setDefaultUseWrapper(false)
