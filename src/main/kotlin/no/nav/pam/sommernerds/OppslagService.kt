@@ -5,7 +5,6 @@ import org.springframework.context.annotation.DependsOn
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
-@Service
 class OppslagService {
     @Autowired
     var dataProvider: DownloadRenhold? = null
