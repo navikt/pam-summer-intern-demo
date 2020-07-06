@@ -35,7 +35,7 @@ class DownloadRenhold {
             maxAttempts = 2,
             backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5)
     )
-    @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
+    //@Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
     //@Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
         val xmlString = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
