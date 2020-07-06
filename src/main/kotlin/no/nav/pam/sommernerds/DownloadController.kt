@@ -14,6 +14,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import java.nio.charset.Charset
 import java.nio.file.InvalidPathException
+import kotlin.reflect.full.findAnnotation
 
 data class DataContainer(var data: MutableMap<String, String>?)
 
@@ -34,8 +35,8 @@ class DownloadRenhold {
             maxAttempts = 2,
             backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5)
     )
-    //@Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
-    @Scheduled(fixedRate = 500000000)
+    @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
+    //@Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
         val xmlString = download("https://www.arbeidstilsynet.no/opendata/renho?sadld.xml")
         logger.error("Failed to download xml")
@@ -44,8 +45,12 @@ class DownloadRenhold {
 
     @Recover
     fun recover(): Unit {
-        val retryAnnotation = DownloadRenhold::class.annotations.find { it == Retryable::javaClass } as? Retryable
-        logger.error("Failed to download xml after ${retryAnnotation?.maxAttempts} tries")
+        /*
+        //val retryAnnotation = DownloadRenhold::class.annotations.find { it == Retryable::class } as Retryable
+        val test = scheduledDL()::class.java.getAnnotation(Retryable::class.java).maxAttempts
+        */
+
+        logger.error("Failed to download xml after tries")
     }
 
 }

@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.RestController
 class RestController {
 
     @Autowired
-    var dataProvider: DownloadRenhold? = null
+    var oppslagService: OppslagService? = null
 
     @GetMapping(value = ["/{orgnummer}"])
     fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): String? {
-        val dict = dataProvider?.dataContainer?.data
-        return dict?.get(nr)
+        return oppslagService?.lookUpOrgnummer(nr)
     }
 
     @GetMapping("/isAlive")
     fun isAlive(): ResponseEntity<String> {
-        val dict = dataProvider?.dataContainer?.data
+        val dict = oppslagService?.dataProvider?.dataContainer?.data
         dict?.let{
             return ResponseEntity("OK", HttpStatus.OK)
         }
