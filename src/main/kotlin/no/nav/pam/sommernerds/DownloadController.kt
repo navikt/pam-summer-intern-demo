@@ -1,6 +1,7 @@
 package no.nav.pam.sommernerds
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Configurable
 import org.springframework.boot.actuate.endpoint.InvalidEndpointRequestException
 import org.springframework.context.annotation.Configuration
 import org.springframework.retry.annotation.Backoff
@@ -17,6 +18,7 @@ import java.nio.charset.Charset
 import java.nio.file.InvalidPathException
 import kotlin.reflect.full.findAnnotation
 
+@Configurable
 data class DataContainer(var data: MutableMap<String, String>?)
 
 @Repository
