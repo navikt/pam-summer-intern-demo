@@ -13,8 +13,8 @@ class RestController {
     @Autowired
     var dataProvider: DownloadRenhold? = null
 
-    @GetMapping(value = ["/{orgnummer}"]) // @RequestMapping(value="/",method=RequestMethod.GET)
-    fun hello(@PathVariable("orgnummer") nr: String): String? {
+    @GetMapping(value = ["/{orgnummer}"])
+    fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): String? {
         val dict = dataProvider?.dataContainer?.dictionary
         return dict?.get(nr)
     }

@@ -11,12 +11,12 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 data class DataContainer(var dictionary: MutableMap<String, String>?)
 
 @JacksonXmlRootElement(localName = "ArrayOfRenholdsvirksomhet")
-data class rot(
+data class Rot(
     @JacksonXmlProperty(isAttribute = false, localName = "Renholdsvirksomhet")
-    val bedrifter: List<Renhold>
+    val bedrifter: List<Renholdsbedrift>
 )
 
-data class Renhold(
+data class Renholdsbedrift(
     @JacksonXmlProperty(isAttribute = false, localName = "Organisasjonsnummer")
     val orgnr: String,
 
@@ -49,7 +49,7 @@ fun xmlToDict(xmlString: String): MutableMap<String, String>? {
             .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val renholdsBedrifter = mapper.readValue(xmlString, rot::class.java).bedrifter
+    val renholdsBedrifter = mapper.readValue(xmlString, Rot::class.java).bedrifter
     val bedriftMap = mutableMapOf<String, String>()
     for (bedrift in renholdsBedrifter) {
         val bedriftStatus = bedrift.status

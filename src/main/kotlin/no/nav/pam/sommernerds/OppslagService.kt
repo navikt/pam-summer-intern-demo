@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
+/*
 fun findBedrift(orgnummer: String, path: String): String {
     val mapper = XmlMapper(
             JacksonXmlModule().apply {
@@ -30,3 +31,5 @@ fun findBedrift(orgnummer: String, path: String): String {
     }
     return "Ikke renholdsbedrift"
 }
+
+ */
