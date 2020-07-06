@@ -7,32 +7,38 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 
+@Component
+class DownloadRenhold {
+    var count: Int = 0
+    var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
+    var _dataContainer: DataContainer? = null
+    var dataContainer = _dataContainer
+        get() = _dataContainer
 
-fun download(link: String, path: String) {
-    URL(link).openStream().use { input ->
-        FileOutputStream(File(path)).use { output ->
-            input.copyTo(output)
+
+    fun download(link: String, path: String) {
+        URL(link).openStream().use { input ->
+            FileOutputStream(File(path)).use { output ->
+                input.copyTo(output)
+            }
         }
     }
-}
 
-/*
-@Component
-class MyClass {
-    var logger: Logger = LoggerFactory.getLogger(MyClass::class.java)
 
-    @Scheduled(fixedRate = 5000)
-    fun foo() {
-        logger.error("hei :)")
+    @Scheduled(fixedRate = 10000)
+    fun scheduledDL() {
+        if (count == 0) {
+            _dataContainer = DataContainer(xmlToDict("/renhold.xml"))
+            count = 1
+            logger.error("0")
+        }
+        else {
+            _dataContainer = DataContainer(xmlToDict("/renhold2.xml"))
+            count = 0
+            logger.error("1")
+        }
     }
-}
-*/
 
-
-
-
-fun main(args: Array<String>) {
-    download("https://www.arbeidstilsynet.no/opendata/renhold.xml", "src/main/resources/renhold.xml")
 }
 
 
