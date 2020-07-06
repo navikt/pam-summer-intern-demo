@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
+import java.nio.charset.Charset
 import javax.xml.crypto.Data
 
 /*
@@ -40,26 +41,23 @@ class DownloadRenhold {
     var dataContainer = _dataContainer
         get() = _dataContainer
 
-
-    fun download(link: String, path: String) {
-        URL(link).openStream().use { input ->
-            FileOutputStream(File(path)).use { output ->
-                input.copyTo(output)
-            }
-        }
+    fun download(link: String): String {
+        val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
+        return xmlAsString
     }
-
 
     @Scheduled(fixedRate = 10000)
     fun scheduledDL() {
         //download("https://www.arbeidstilsynet.no/opendata/renhold.xml", "src/main/resources/renhold.xml")
         if (count == 0) {
-            _dataContainer = DataContainer(xmlToDict("/renhold.xml"))
+            val xmlString1 = File("src/main/resources/renhold2.xml").readText(Charset.forName("UTF-8"))
+            _dataContainer = DataContainer(xmlToDict(xmlString1))
             count = 1
             logger.error("0")
         }
         else {
-            _dataContainer = DataContainer(xmlToDict("/renhold2.xml"))
+            val xmlString2 = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
+            _dataContainer = DataContainer(xmlToDict(xmlString2))
             count = 0
             logger.error("1")
         }
@@ -124,7 +122,8 @@ fun findBedrift(orgnummer: String, path: String): String {
     return "Ikke renholdsbedrift"
 }
 
-fun xmlToDict(path: String): MutableMap<String, String>? {
+fun xmlToDict(xmlString: String): MutableMap<String, String>? {
+
     val mapper = XmlMapper(
             JacksonXmlModule().apply {
                 setDefaultUseWrapper(false)
@@ -133,8 +132,7 @@ fun xmlToDict(path: String): MutableMap<String, String>? {
             .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val rsc = rot::class.java.getResource(path)
-    val renholdsBedrifter = mapper.readValue(rsc, rot::class.java).bedrifter
+    val renholdsBedrifter = mapper.readValue(xmlString, rot::class.java).bedrifter
     val bedriftMap = mutableMapOf<String, String>()
     for (bedrift in renholdsBedrifter) {
         val bedriftStatus = bedrift.status

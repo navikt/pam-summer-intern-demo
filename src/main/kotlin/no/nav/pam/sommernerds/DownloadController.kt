@@ -3,18 +3,19 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.StringBuilder
 import java.net.URL
+import java.nio.charset.Charset
 
-
-fun download(link: String, path: String) {
-    URL(link).openStream().use { input ->
-        FileOutputStream(File(path)).use { output ->
-            input.copyTo(output)
-        }
-    }
+/*
+fun download(link: String) {
+    val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
+    println(xmlAsString)
 }
+ */
 
 /*
 @Component
@@ -32,8 +33,11 @@ class MyClass {
 
 
 fun main(args: Array<String>) {
-    download("https://www.arbeidstilsynet.no/opendata/renhold.xml", "src/main/resources/renhold.xml")
+    val file = File("src/main/resources/renhold2.xml").readText(Charset.forName("UTF-8"))
+    println(file)
 }
+
+
 
 
 
