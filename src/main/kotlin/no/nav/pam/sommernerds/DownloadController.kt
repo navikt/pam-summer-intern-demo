@@ -29,13 +29,15 @@ class DownloadRenhold {
         val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
         return xmlAsString
     }
-
+    /*
     @Retryable(
             value=[IOException::class, NullPointerException::class, IllegalArgumentException::class],
             maxAttempts = 2,
             backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5)
     )
-    //@Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
+
+     */
+    @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
     //@Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
         val xmlString = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
@@ -43,6 +45,7 @@ class DownloadRenhold {
         _dataContainer = DataContainer(xmlToDict(xmlString))
     }
 
+    /*
     @Recover
     fun recover(): Unit {
         /*
@@ -52,6 +55,7 @@ class DownloadRenhold {
 
         logger.error("Failed to download xml after tries")
     }
+     */
 
 }
 
