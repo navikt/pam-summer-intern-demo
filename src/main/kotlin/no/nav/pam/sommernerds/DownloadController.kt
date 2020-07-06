@@ -1,16 +1,26 @@
 package no.nav.pam.sommernerds
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.boot.actuate.endpoint.InvalidEndpointRequestException
+import org.springframework.context.annotation.Configuration
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.EnableRetry
+import org.springframework.retry.annotation.Recover
+import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import java.io.IOException
+import java.net.MalformedURLException
 import java.net.URL
 import java.nio.charset.Charset
+import java.nio.file.InvalidPathException
 
 data class DataContainer(var data: MutableMap<String, String>?)
 
 @Component
+@EnableRetry
 class DownloadRenhold {
-    //var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
+    var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
     var _dataContainer: DataContainer = DataContainer(xmlToDict(download("https://www.arbeidstilsynet.no/opendata/renhold.xml")))
     val dataContainer = _dataContainer
 
@@ -19,11 +29,23 @@ class DownloadRenhold {
         return xmlAsString
     }
 
-
-    @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
+    @Retryable(
+            value=[IOException::class, NullPointerException::class, IllegalArgumentException::class],
+            maxAttempts = 2,
+            backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5)
+    )
+    //@Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
+    @Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
-        val xmlString = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
+        val xmlString = download("https://www.arbeidstilsynet.no/opendata/renho?sadld.xml")
+        logger.error("Failed to download xml")
         _dataContainer = DataContainer(xmlToDict(xmlString))
+    }
+
+    @Recover
+    fun recover(): Unit {
+        val retryAnnotation = DownloadRenhold::class.annotations.find { it == Retryable::javaClass } as? Retryable
+        logger.error("Failed to download xml after ${retryAnnotation?.maxAttempts} tries")
     }
 
 }

@@ -6,9 +6,10 @@ import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
-/*
-fun lookUpOrgnummer(orgnummer: String, dataContainer: DataContainer): String {
 
+fun lookUpOrgnummer(orgnummer: String, dataContainer: DataContainer): String? {
+    val status = dataContainer.data?.get(orgnummer)
+    return status
 }
 
- */
+
