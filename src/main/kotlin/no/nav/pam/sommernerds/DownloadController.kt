@@ -38,7 +38,7 @@ class DownloadRenhold {
     @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
     //@Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
-        val xmlString = download("https://www.arbeidstilsynet.no/opendata/renho?sadld.xml")
+        val xmlString = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
         logger.error("Failed to download xml")
         _dataContainer = DataContainer(xmlToDict(xmlString))
     }
