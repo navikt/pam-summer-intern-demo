@@ -19,7 +19,11 @@ class RestController {
     }
 
     @GetMapping("/isAlive")
-    fun isAlive(): ResponseEntity<String> {
+    fun isAlive(): ResponseEntity<String> =
+            ResponseEntity("OK", HttpStatus.OK)
+
+    @GetMapping("/isReady")
+    fun isReady(): ResponseEntity<String> {
         val dict = oppslagService?.dataProvider?.dataContainer?.data
         dict?.let{
             return ResponseEntity("OK", HttpStatus.OK)
@@ -27,7 +31,5 @@ class RestController {
         return ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
-    @GetMapping("/isReady")
-    fun isReady(): ResponseEntity<String> =
-            ResponseEntity("OK", HttpStatus.OK)
+
 }
