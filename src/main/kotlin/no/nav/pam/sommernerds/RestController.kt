@@ -2,7 +2,6 @@ package no.nav.pam.sommernerds
 
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -11,15 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@ConditionalOnBean(OppslagService::class)
-class RestController {
-
-    @Autowired
-    var oppslagService: OppslagService? = null
+class RestController @Autowired constructor(private val oppslagService: OppslagService) {
 
     @GetMapping(value = ["/{orgnummer}"], produces = [ MediaType.APPLICATION_JSON_VALUE])
     fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): Statusbedrift? {
-        return oppslagService?.lookUpOrgnummer(nr)
+        return oppslagService.lookUpOrgnummer(nr)
     }
 
     @GetMapping("/isAlive")
