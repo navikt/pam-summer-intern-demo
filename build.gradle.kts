@@ -65,6 +65,8 @@ dependencies {
     implementation("org.springframework.retry:spring-retry:1.1.5.RELEASE")
     implementation("org.springframework:spring-aspects")
 
+    implementation("org.json:json:20141113")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test:${Versions.springBoot}")
     testImplementation("org.junit.jupiter:junit-jupiter:${Versions.junitJupiter}")
     testImplementation("org.jetbrains.kotlin:kotlin-test:${Versions.kotlin}")

@@ -1,8 +1,10 @@
 package no.nav.pam.sommernerds
 
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,8 +17,8 @@ class RestController {
     @Autowired
     var oppslagService: OppslagService? = null
 
-    @GetMapping(value = ["/{orgnummer}"])
-    fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): String? {
+    @GetMapping(value = ["/{orgnummer}"], produces = [ MediaType.APPLICATION_JSON_VALUE])
+    fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): Statusbedrift? {
         return oppslagService?.lookUpOrgnummer(nr)
     }
 
