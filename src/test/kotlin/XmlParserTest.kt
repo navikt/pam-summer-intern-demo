@@ -6,18 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(classes = arrayOf(OppslagService::class, DownloadRenhold::class))
-class XmlParserTest {
+class XmlParserTest @Autowired constructor(private val oppslagService: OppslagService) {
 
-    @Autowired
-    var oppslagService: OppslagService? = null
-
-    /*
     @Test
     fun `sjekk at en godkjent bedrift returnerer at den er godkjent`(){
-        assertEquals(oppslagService?.lookUpOrgnummer("943001820"), "{'943001820':'Godkjent med ansatte'}")
+        assertEquals(oppslagService.lookUpOrgnummer("943001820").Status, "Godkjent med ansatte")
     }
 
-     */
+
     /*
     @Test
     fun `sjekk at en ulovlig bedrift returnerer "ikke godkjent"`(){

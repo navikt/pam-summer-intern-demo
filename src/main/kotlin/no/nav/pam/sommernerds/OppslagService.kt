@@ -3,11 +3,9 @@ package no.nav.pam.sommernerds
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.stereotype.Service
 
 @Service
-@ConditionalOnBean(DownloadRenhold::class)
 class OppslagService @Autowired constructor(private val dataProvider: DownloadRenhold) {
 
     fun lookUpOrgnummer(orgnummer: String): Statusbedrift {
