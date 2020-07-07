@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(classes= arrayOf(OppslagService::class, DownloadRenhold::class))
 class XmlParserTest {
+
     @Autowired
     var oppslagService: OppslagService? = null
 
@@ -42,3 +43,5 @@ class XmlParserTest {
 
      */
 }
+
+

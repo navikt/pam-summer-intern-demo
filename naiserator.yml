@@ -27,7 +27,7 @@ spec:
       memory: 256Mi
   vault:
     enabled: false
-  webproxy: false
+  webproxy: true
   prometheus:
     enabled: true
     path: /actuator/prometheus
