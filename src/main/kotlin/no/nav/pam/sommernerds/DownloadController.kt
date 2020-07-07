@@ -23,8 +23,8 @@ data class DataContainer(var data: MutableMap<String, String>?)
 @Repository
 @EnableRetry
 class DownloadRenhold {
-    var logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
-    var _dataContainer: DataContainer = DataContainer(xmlToDict(download("https://www.arbeidstilsynet.no/opendata/renhold.xml")))
+    private val logger: Logger = LoggerFactory.getLogger(DownloadRenhold::class.java)
+    private var _dataContainer: DataContainer = DataContainer(xmlToDict(download("https://www.arbeidstilsynet.no/opendata/renhold.xml")))
     val dataContainer = _dataContainer
 
     fun download(link: String): String {

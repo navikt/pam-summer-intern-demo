@@ -7,13 +7,11 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Service
-@ConditionalOnBean(DownloadRenhold::class)
-class OppslagService {
-    @Autowired
-    var dataProvider: DownloadRenhold? = null
+//@ConditionalOnBean(DownloadRenhold::class)
+class OppslagService @Autowired constructor(private val dataProvider: DownloadRenhold) {
 
     fun lookUpOrgnummer(orgnummer: String): String? {
-        val dict = dataProvider?.dataContainer?.data
+        val dict = dataProvider.dataContainer.data
         return dict?.get(orgnummer)
     }
 }

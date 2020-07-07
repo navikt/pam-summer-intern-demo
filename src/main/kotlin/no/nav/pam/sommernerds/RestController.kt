@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@ConditionalOnBean(OppslagService::class)
-class RestController {
-
-    @Autowired
-    var oppslagService: OppslagService? = null
+//@ConditionalOnBean(OppslagService::class)
+class RestController @Autowired constructor(private val oppslagService: OppslagService) {
 
     @GetMapping(value = ["/{orgnummer}"])
     fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): String? {
-        return oppslagService?.lookUpOrgnummer(nr)
+        return oppslagService.lookUpOrgnummer(nr)
     }
 
     @GetMapping("/isAlive")
