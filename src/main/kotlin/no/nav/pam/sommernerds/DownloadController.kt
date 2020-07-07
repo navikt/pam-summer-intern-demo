@@ -40,10 +40,8 @@ class DownloadRenhold {
 
     @Recover
     fun recover(): Unit {
-        /*
-        //val retryAnnotation = DownloadRenhold::class.annotations.find { it == Retryable::class } as Retryable
+        val retryAnnotation = DownloadRenhold::class.annotations.find { it == Retryable::class } as Retryable
         val test = scheduledDL()::class.java.getAnnotation(Retryable::class.java).maxAttempts
-        */
 
         logger.error("Failed to download xml after tries")
     }

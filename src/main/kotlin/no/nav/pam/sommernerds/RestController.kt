@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-//@ConditionalOnBean(OppslagService::class)
+@ConditionalOnBean(OppslagService::class)
 class RestController @Autowired constructor(private val oppslagService: OppslagService) {
 
     @GetMapping(value = ["/{orgnummer}"])
@@ -21,7 +21,6 @@ class RestController @Autowired constructor(private val oppslagService: OppslagS
     fun isAlive(): ResponseEntity<String> =
             ResponseEntity("OK", HttpStatus.OK)
 
-    /*
     @GetMapping("/isReady")
     fun isReady(): ResponseEntity<String> {
         val dict = oppslagService?.dataProvider?.dataContainer?.data
@@ -30,10 +29,12 @@ class RestController @Autowired constructor(private val oppslagService: OppslagS
         }
         return ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR)
     }
-     */
 
+/*
     @GetMapping("/isReady")
     fun isReady(): ResponseEntity<String> =
             ResponseEntity("OK", HttpStatus.OK)
+
+ */
 
 }
