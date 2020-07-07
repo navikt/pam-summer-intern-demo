@@ -18,7 +18,6 @@ import java.nio.charset.Charset
 import java.nio.file.InvalidPathException
 import kotlin.reflect.full.findAnnotation
 
-@Configurable
 data class DataContainer(var data: MutableMap<String, String>?)
 
 @Repository

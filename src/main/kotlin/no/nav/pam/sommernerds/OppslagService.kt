@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Service
-//@ConditionalOnBean(DownloadRenhold::class)
+@ConditionalOnBean(DownloadRenhold::class)
 class OppslagService {
     @Autowired
     var dataProvider: DownloadRenhold? = null
