@@ -1,6 +1,7 @@
-
 import no.nav.pam.sommernerds.DownloadRenhold
 import no.nav.pam.sommernerds.OppslagService
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -15,8 +16,8 @@ class XmlParserTest {
     fun `sjekk at en godkjent bedrift returnerer at den er godkjent`(){
         assertEquals(oppslagService?.lookUpOrgnummer("943001820"), "{'943001820':'Godkjent med ansatte'}")
     }
-    */
 
+     */
     /*
     @Test
     fun `sjekk at en ulovlig bedrift returnerer "ikke godkjent"`(){
@@ -27,6 +28,7 @@ class XmlParserTest {
     fun `sjekk at bedrift som ikke finnes i registeret returnerer at den ikke er renholdsbedrift`(){
         assertEquals(findBedrift("74094722", "/renholdTestData.xml"), "Ikke renholdsbedrift")
     }
+    */
 
 
     //TODO test download
@@ -37,5 +39,5 @@ class XmlParserTest {
 
     //TODO test xml2dict
 
-     */
+
 }

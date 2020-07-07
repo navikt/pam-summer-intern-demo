@@ -1,5 +1,7 @@
 package no.nav.pam.sommernerds
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.stereotype.Service
@@ -15,4 +17,11 @@ class OppslagService @Autowired constructor(private val dataProvider: DownloadRe
     }
 }
 
-data class Statusbedrift(val Organisasjonsnummer: String, val Status: String?)
+@JsonPropertyOrder("organisasjonsnummer", "status")
+data class Statusbedrift(
+        @JsonProperty("organisasjonsnummer")
+        val Organisasjonsnummer: String,
+
+        @JsonProperty("status")
+        val Status: String?
+)
