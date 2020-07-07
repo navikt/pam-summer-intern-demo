@@ -1,5 +1,7 @@
 package no.nav.pam.sommernerds
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -35,3 +37,12 @@ class RestController @Autowired constructor(private val oppslagService: OppslagS
     fun isReady(): ResponseEntity<String> =
         ResponseEntity("OK", HttpStatus.OK)
 }
+
+@JsonPropertyOrder("organisasjonsnummer", "status")
+data class Statusbedrift(
+        @JsonProperty("organisasjonsnummer")
+        val Organisasjonsnummer: String,
+
+        @JsonProperty("status")
+        val Status: String?
+)

@@ -37,7 +37,7 @@ data class Avdeling(
 
 )
 
-fun xmlToDict(xmlString: String): MutableMap<String, String>? {
+fun parseRenholdsXML(xmlString: String): List<Renholdsbedrift> {
 
     val mapper = XmlMapper(
         JacksonXmlModule().apply {
@@ -46,15 +46,20 @@ fun xmlToDict(xmlString: String): MutableMap<String, String>? {
     ).registerKotlinModule()
         .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
     val renholdsBedrifter = mapper.readValue(xmlString, Rot::class.java).bedrifter
-    val bedriftMap = mutableMapOf<String, String>()
+
+    return renholdsBedrifter
+}
+
+fun mapOrgnrToGodkjentStatus(renholdsBedrifter: List<Renholdsbedrift>): Map<String,String>{
+
+    val orgnrToGodkjentStatusMap = mutableMapOf<String, String>()
     for (bedrift in renholdsBedrifter) {
         val bedriftStatus = bedrift.status
-        bedriftMap[bedrift.orgnr] = bedriftStatus
+        orgnrToGodkjentStatusMap[bedrift.orgnr] = bedriftStatus
         bedrift.underavdeling?.avdelinger?.forEach() {
-            bedriftMap[it.avdorgnr] = bedriftStatus
+            orgnrToGodkjentStatusMap[it.avdorgnr] = bedriftStatus
         }
     }
-    return bedriftMap
+    return orgnrToGodkjentStatusMap
 }

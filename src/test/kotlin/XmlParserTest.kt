@@ -1,11 +1,11 @@
-import no.nav.pam.sommernerds.DownloadRenhold
+import no.nav.pam.sommernerds.RenholdsregisterDownloader
 import no.nav.pam.sommernerds.OppslagService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes = arrayOf(OppslagService::class, DownloadRenhold::class))
+@SpringBootTest(classes = arrayOf(OppslagService::class, RenholdsregisterDownloader::class))
 class XmlParserTest @Autowired constructor(private val oppslagService: OppslagService) {
 
     @Test
