@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes= arrayOf(OppslagService::class, DownloadRenhold::class))
+//@SpringBootTest(classes= arrayOf(OppslagService::class, DownloadRenhold::class))
 class XmlParserTest {
+    /*
     @Autowired
     var oppslagService: OppslagService? = null
 
@@ -17,6 +18,8 @@ class XmlParserTest {
     fun `sjekk at en godkjent bedrift returnerer at den er godkjent`(){
         assertEquals(oppslagService?.lookUpOrgnummer("943001820"), "Godkjent med ansatte")
     }
+
+     */
 
     /*
     @Test
@@ -40,3 +43,5 @@ class XmlParserTest {
 
      */
 }
+
+
