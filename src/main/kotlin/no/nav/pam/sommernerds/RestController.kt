@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class RestController {
 
     @Autowired
-    var oppslagService: OppslagService = OppslagService()
+    var oppslagService: OppslagService? = null
 
     @GetMapping(value = ["/{orgnummer}"])
     fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): String? {
