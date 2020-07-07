@@ -18,7 +18,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
-    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+    //id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
