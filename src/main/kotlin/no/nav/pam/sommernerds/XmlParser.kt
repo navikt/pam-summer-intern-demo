@@ -40,12 +40,12 @@ data class Avdeling(
 fun xmlToDict(xmlString: String): MutableMap<String, String>? {
 
     val mapper = XmlMapper(
-            JacksonXmlModule().apply {
-                setDefaultUseWrapper(false)
-            }
+        JacksonXmlModule().apply {
+            setDefaultUseWrapper(false)
+        }
     ).registerKotlinModule()
-            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     val renholdsBedrifter = mapper.readValue(xmlString, Rot::class.java).bedrifter
     val bedriftMap = mutableMapOf<String, String>()

@@ -1,18 +1,14 @@
-import no.nav.pam.sommernerds.DataContainer
+
 import no.nav.pam.sommernerds.DownloadRenhold
 import no.nav.pam.sommernerds.OppslagService
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes= arrayOf(OppslagService::class, DownloadRenhold::class))
+@SpringBootTest(classes = arrayOf(OppslagService::class, DownloadRenhold::class))
 class XmlParserTest {
 
     @Autowired
     var oppslagService: OppslagService? = null
-
 
     /*
     @Test
@@ -43,5 +39,3 @@ class XmlParserTest {
 
      */
 }
-
-

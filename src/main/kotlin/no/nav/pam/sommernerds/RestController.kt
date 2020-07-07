@@ -1,6 +1,5 @@
 package no.nav.pam.sommernerds
 
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -19,7 +18,7 @@ class RestController @Autowired constructor(private val oppslagService: OppslagS
 
     @GetMapping("/isAlive")
     fun isAlive(): ResponseEntity<String> =
-            ResponseEntity("OK", HttpStatus.OK)
+        ResponseEntity("OK", HttpStatus.OK)
 
     /*
     @GetMapping("/isReady")
@@ -34,6 +33,5 @@ class RestController @Autowired constructor(private val oppslagService: OppslagS
 
     @GetMapping("/isReady")
     fun isReady(): ResponseEntity<String> =
-            ResponseEntity("OK", HttpStatus.OK)
-
+        ResponseEntity("OK", HttpStatus.OK)
 }

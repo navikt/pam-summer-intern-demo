@@ -1,1 +1,1 @@
-rootProject.name="pam-summer-intern-demo"
+rootProject.name = "pam-summer-intern-demo"

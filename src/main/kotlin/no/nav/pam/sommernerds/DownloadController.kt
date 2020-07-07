@@ -26,12 +26,12 @@ class DownloadRenhold {
     }
 
     @Retryable(
-            value=[IOException::class, NullPointerException::class, IllegalArgumentException::class],
-            maxAttempts = 2,
-            backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5)
+        value = [IOException::class, NullPointerException::class, IllegalArgumentException::class],
+        maxAttempts = 2,
+        backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5)
     )
     @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
-    //@Scheduled(fixedRate = 500000000)
+    // @Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
         val xmlString = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
         logger.error("Failed to download xml")
@@ -39,15 +39,10 @@ class DownloadRenhold {
     }
 
     @Recover
-    fun recover(): Unit {
+    fun recover() {
         val retryAnnotation = DownloadRenhold::class.annotations.find { it == Retryable::class } as Retryable
         val test = scheduledDL()::class.java.getAnnotation(Retryable::class.java).maxAttempts
 
         logger.error("Failed to download xml after tries")
     }
-
 }
-
-
-
-
