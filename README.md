@@ -2,7 +2,9 @@
 A service that looks up the approval status of companies registered in Arbeidstilysnets godkjenningsregistre.
 
 ## About the current version
-The initial version of this service was developed by summer interns during the summer of 2020. Due to a lack of existing APIs related to the retrieval of data from Arbeidstilysnets godkjenningsregistre, the only registy initially available for lookups was the cleaning registy (Renholdsregisteret). The application takes an organization number (Orgnr) as input and returns a json as output.
+The initial version of this service was developed by summer interns during the summer of 2020. Due to a lack of existing APIs related to the retrieval of data from Arbeidstilysnets godkjenningsregistre, the only registry initially available for lookups was the cleaning registy (Renholdsregisteret). The application takes an organization number (Orgnr) as input and returns a json as output.
+
+![Alt text](https://i.imgur.com/WYS0657.png "An example using a fake orgnr")
  
 ## Dependencies
 The project requires the following to run (minimum):
