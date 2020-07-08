@@ -40,4 +40,5 @@ class RenholdsregisterRepository @Autowired constructor(private val downloader: 
     private fun parseAndMapRenholdsbedrifter(xmlString: String): Map<String,String> {
         return mapOrgnrToGodkjentStatus(parseRenholdsXML(xmlString))
     }
+
 }
