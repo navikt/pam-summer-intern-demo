@@ -19,10 +19,12 @@ import java.nio.charset.Charset
 class RenholdsregisterDownloader {
     private val logger: Logger = LoggerFactory.getLogger(RenholdsregisterDownloader::class.java)
     private var orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(download("https://www.arbeidstilsynet.no/opendata/renhold.xml"))
+    private var renholdXMLString: String = ""
 
 
     fun download(link: String): String {
         val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
+        renholdXMLString = xmlAsString
         return xmlAsString
     }
 
@@ -49,5 +51,9 @@ class RenholdsregisterDownloader {
 
     private fun parseAndMapRenholdsbedrifter(xmlString: String): Map<String,String> {
         return mapOrgnrToGodkjentStatus(parseRenholdsXML(xmlString))
+    }
+
+    fun getRenholdXMLString(): String {
+        return renholdXMLString
     }
 }

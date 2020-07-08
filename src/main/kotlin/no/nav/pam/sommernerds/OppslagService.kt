@@ -7,10 +7,14 @@ import org.springframework.stereotype.Service
 @Service
 class OppslagService @Autowired constructor(private val dataProvider: RenholdsregisterRepository) {
 
-    fun lookUpOrgnummer(orgnummer: String): Statusbedrift {
+    fun lookUpOrgnummer(orgnummer: String): RestController.Statusbedrift {
         val orgnrToGodkjentStatusMap = dataProvider.getAllOrgnrToGodkjentStatusMap()
-        val statusbedrift = Statusbedrift(orgnummer, orgnrToGodkjentStatusMap.get(orgnummer))
+        val statusbedrift = RestController.Statusbedrift(orgnummer, orgnrToGodkjentStatusMap.get(orgnummer))
         return statusbedrift
+    }
+
+    fun getMap(): Map<String,String>{
+        return dataProvider.getAllOrgnrToGodkjentStatusMap()
     }
 }
 
