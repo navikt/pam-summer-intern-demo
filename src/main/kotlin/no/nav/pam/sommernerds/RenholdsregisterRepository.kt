@@ -23,19 +23,14 @@ class RenholdsregisterRepository @Autowired constructor(private val downloader: 
             maxAttempts = 2,
             backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5))
     @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
-    // @Scheduled(fixedRate = 500000000)
     fun scheduledDL() {
         val xmlString = downloader.download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
-        //logger.error("Failed to download xml")
         orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(xmlString)
     }
 
     @Recover
     fun recover() {
-        val retryAnnotation = RenholdsregisterRepository::class.annotations.find { it == Retryable::class } as Retryable
-        val test = scheduledDL()::class.java.getAnnotation(Retryable::class.java).maxAttempts
-
-        logger.error("Failed to download xml after tries")
+        logger.error("Failed to download renhold.xml: Download timed out")
     }
 
     fun getAllOrgnrToGodkjentStatusMap(): Map<String,String> {
