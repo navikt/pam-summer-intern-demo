@@ -23,8 +23,8 @@ class RenholdsregisterRepository @Autowired constructor(private val downloader: 
             maxAttempts = 2,
             backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5))
     @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
-    fun scheduledDL() {
-        val xmlString = downloader.download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
+    fun scheduledDL(link: String) {
+        val xmlString = downloader.download(link)
         orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(xmlString)
     }
 

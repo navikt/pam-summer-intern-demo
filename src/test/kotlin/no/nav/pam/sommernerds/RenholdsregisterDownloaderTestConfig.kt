@@ -8,4 +8,10 @@ import org.springframework.context.annotation.Bean
 class RenholdsregisterDownloaderTestConfig {
     @Bean
     fun renholdsregisterDownloaderTest() = mockk<RenholdsregisterDownloader>()
+
+    /*
+    @Bean
+    fun renholdsregisterRepositoryTest() = RenholdsregisterRepository
+
+     */
 }

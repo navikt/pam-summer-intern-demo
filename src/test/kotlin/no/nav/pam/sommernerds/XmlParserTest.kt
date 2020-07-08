@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.context.annotation.Bean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.io.File
 
@@ -47,28 +48,22 @@ class XmlParserTest @Autowired constructor(private val oppslagService: OppslagSe
 
 @Import(RenholdsregisterDownloaderTestConfig::class)
 @ExtendWith(SpringExtension::class)
-class RenholdsregisterDownloaderTest {
-
-    @Autowired
-    private var mockRenholdsregisterDownloader: RenholdsregisterDownloader? = null
+class RenholdsregisterDownloaderTest @Autowired constructor(private val mockRenholdsregisterDownloader: RenholdsregisterDownloader) {
 
     @Test
     fun `sjekk at orgnrToGodkjentStatusMap oppdateres ved nedlasting av ny eller oppdatert fil`() {
         val file1 = File("src/test/resources/renholdTestData.xml").readText()
         val file2 = File("src/test/resources/TestData.xml").readText()
-        every { mockRenholdsregisterDownloader?.download("1") } returns file1
-        every { mockRenholdsregisterDownloader?.download("2") } returns file2
+        every { mockRenholdsregisterDownloader.download("https://www.arbeidstilsynet.no/opendata/renhold.xml") } returns file1
+        every { mockRenholdsregisterDownloader.download("2") } returns file2
 
-        /*
-        mockRenholdsregisterDownloader?.scheduledDL("1")
-        mockRenholdsregisterDownloader?.scheduledDL("2")
+        val renholdsregisterRepository = RenholdsregisterRepository(mockRenholdsregisterDownloader)
 
-        assertEquals(mockRenholdsregisterDownloader?.getAllOrgnrToGodkjentStatusMap()?.get("943001820"), "Godkjent med ansatte")
+        renholdsregisterRepository.scheduledDL("https://www.arbeidstilsynet.no/opendata/renhold.xml")
+        assertEquals(renholdsregisterRepository.getAllOrgnrToGodkjentStatusMap()["983068824"], "Godkjent med ansatte")
 
-         */
-        assertEquals(mockRenholdsregisterDownloader?.download("1"), file1)
-
-
+        renholdsregisterRepository.scheduledDL("2")
+        assertEquals(renholdsregisterRepository.getAllOrgnrToGodkjentStatusMap()["943001820"], "Godkjent med ansatte")
     }
 
 }
