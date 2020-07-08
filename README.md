@@ -24,7 +24,7 @@ git clone https://github.com/navikt/pam-godkjenningsregistre.git
 ```
 ./gradlew bootrun
 ```
-6. Lookup should become available on URL: localhost:8080/(Orgnr)
+4. Lookup should become available on URL: localhost:8080/(Orgnr)
 
 ## The Summer Intern Team
 * [Yong Bin Kwon](https://github.com/yongbinkwon)
