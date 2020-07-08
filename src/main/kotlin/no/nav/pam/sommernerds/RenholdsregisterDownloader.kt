@@ -7,15 +7,13 @@ import java.nio.charset.Charset
 @Component
 class RenholdsregisterDownloader {
 
-    private var renholdXMLString: String = ""
-
-    fun download(link: String): String {
+    fun download(link: String): Map<String, String> {
         val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
-        renholdXMLString = xmlAsString
-        return xmlAsString
+        return parseAndMapRenholdsbedrifter(xmlAsString)
     }
 
-    fun getRenholdXMLString(): String {
-        return renholdXMLString
+    private fun parseAndMapRenholdsbedrifter(xmlString: String): Map<String, String> {
+        return mapOrgnrToGodkjentStatus(parseRenholdsXML(xmlString))
     }
+
 }

@@ -9,9 +9,11 @@ class RenholdsregisterDownloaderTestConfig {
     @Bean
     fun renholdsregisterDownloaderTest() = mockk<RenholdsregisterDownloader>()
 
-    /*
-    @Bean
-    fun renholdsregisterRepositoryTest() = RenholdsregisterRepository
 
-     */
+    @Bean
+    fun renholdsregisterRepositoryTest() = RenholdsregisterRepository()
+
+    @Bean
+    fun schedulerTest(renholdsregisterRepository: RenholdsregisterRepository, renholdsregisterDownloader: RenholdsregisterDownloader) =
+            Scheduler(renholdsregisterRepository, renholdsregisterDownloader)
 }

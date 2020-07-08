@@ -14,31 +14,12 @@ import java.io.IOException
 
 @Repository
 @EnableRetry
-class RenholdsregisterRepository @Autowired constructor(private val downloader: RenholdsregisterDownloader) {
-    private val logger: Logger = LoggerFactory.getLogger(RenholdsregisterRepository::class.java)
-    private var orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(downloader.download("https://www.arbeidstilsynet.no/opendata/renhold.xml"))
+class RenholdsregisterRepository {
+    private var orgnrToGodkjentStatusMap: Map<String, String> = emptyMap()
 
-    @Retryable(
-            value = [IOException::class, NullPointerException::class, IllegalArgumentException::class],
-            maxAttempts = 2,
-            backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5))
-    @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
-    fun scheduledDL(link: String) {
-        val xmlString = downloader.download(link)
-        orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(xmlString)
+    fun updateOrgnrToGodkjentStatusMap(orgnrToGodkjentStatusMap: Map<String, String>) {
+        this.orgnrToGodkjentStatusMap = orgnrToGodkjentStatusMap
     }
 
-    @Recover
-    fun recover() {
-        logger.error("Failed to download renhold.xml: Download timed out")
-    }
-
-    fun getAllOrgnrToGodkjentStatusMap(): Map<String,String> {
-        return orgnrToGodkjentStatusMap
-    }
-
-    private fun parseAndMapRenholdsbedrifter(xmlString: String): Map<String,String> {
-        return mapOrgnrToGodkjentStatus(parseRenholdsXML(xmlString))
-    }
-
+    fun getGodkjentStatus(orgnr: String) = orgnrToGodkjentStatusMap[orgnr]
 }

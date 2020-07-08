@@ -11,18 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class RestController @Autowired constructor(private val oppslagService: OppslagService, private val renholdsregisterDownloader: RenholdsregisterDownloader) {
+class RestController @Autowired constructor(private val repository: RenholdsregisterRepository) {
 
     @GetMapping(value = ["/{orgnummer}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): Statusbedrift? {
-        return oppslagService.lookUpOrgnummer(nr)
+        val godkjenningStatus = repository.getGodkjentStatus(nr)
+        return Statusbedrift(nr, godkjenningStatus)
     }
 
     @GetMapping("/isAlive")
     fun isAlive(): ResponseEntity<String> =
             ResponseEntity("OK", HttpStatus.OK)
 
-
+    /*
     @GetMapping("/isReady")
     fun isReady(): ResponseEntity<String> {
         if (renholdsregisterDownloader.getRenholdXMLString() == "") {
@@ -30,6 +31,12 @@ class RestController @Autowired constructor(private val oppslagService: OppslagS
         }else{
             return ResponseEntity("OK", HttpStatus.OK)
         }
+    }
+     */
+
+    @GetMapping("/isReady")
+    fun isReady(): ResponseEntity<String> {
+        return ResponseEntity("OK", HttpStatus.OK)
     }
 
     @JsonPropertyOrder("organisasjonsnummer", "status")

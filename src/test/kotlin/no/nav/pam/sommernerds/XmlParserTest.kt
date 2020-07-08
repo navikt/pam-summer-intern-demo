@@ -4,21 +4,25 @@ import io.mockk.every
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.context.annotation.Bean
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import java.io.File
+import kotlin.test.assertNull
 
-@SpringBootTest(classes = arrayOf(OppslagService::class, RenholdsregisterDownloader::class))
-class XmlParserTest @Autowired constructor(private val oppslagService: OppslagService) {
+
+@Import(RenholdsregisterDownloaderTestConfig::class)
+@ExtendWith(SpringExtension::class)
+class getGodkjentStatusTest @Autowired constructor(private val mockRenholdsregisterDownloader: RenholdsregisterDownloader,
+                                                            private val renholdsregisterRepository: RenholdsregisterRepository,
+                                                            private val scheduler: Scheduler) {
+
 
     @Test
     fun `sjekk at en godkjent bedrift returnerer at den er godkjent`(){
-        assertEquals(oppslagService.lookUpOrgnummer("943001820").Status, "Godkjent med ansatte")
+        every { mockRenholdsregisterDownloader.download("1") } returns mapOf("983068824" to "Godkjent med ansatte")
+        scheduler.scheduledDL("1")
+        assertEquals(renholdsregisterRepository.getGodkjentStatus("983068824"), "Godkjent med ansatte")
     }
-
 
     /*
     @Test
@@ -48,22 +52,19 @@ class XmlParserTest @Autowired constructor(private val oppslagService: OppslagSe
 
 @Import(RenholdsregisterDownloaderTestConfig::class)
 @ExtendWith(SpringExtension::class)
-class RenholdsregisterDownloaderTest @Autowired constructor(private val mockRenholdsregisterDownloader: RenholdsregisterDownloader) {
-
+class SchedulerTest @Autowired constructor(private val mockRenholdsregisterDownloader: RenholdsregisterDownloader,
+private val renholdsregisterRepository: RenholdsregisterRepository, private val scheduler: Scheduler) {
     @Test
     fun `sjekk at orgnrToGodkjentStatusMap oppdateres ved nedlasting av ny eller oppdatert fil`() {
-        val file1 = File("src/test/resources/renholdTestData.xml").readText()
-        val file2 = File("src/test/resources/TestData.xml").readText()
-        every { mockRenholdsregisterDownloader.download("https://www.arbeidstilsynet.no/opendata/renhold.xml") } returns file1
-        every { mockRenholdsregisterDownloader.download("2") } returns file2
+        every { mockRenholdsregisterDownloader.download("1") } returns mapOf("983068824" to "Godkjent med ansatte")
+        every { mockRenholdsregisterDownloader.download("2") } returns mapOf("943001820" to "Godkjent med ansatte")
 
-        val renholdsregisterRepository = RenholdsregisterRepository(mockRenholdsregisterDownloader)
+        scheduler.scheduledDL("1")
+        assertEquals(renholdsregisterRepository.getGodkjentStatus("983068824"), "Godkjent med ansatte")
 
-        renholdsregisterRepository.scheduledDL("https://www.arbeidstilsynet.no/opendata/renhold.xml")
-        assertEquals(renholdsregisterRepository.getAllOrgnrToGodkjentStatusMap()["983068824"], "Godkjent med ansatte")
-
-        renholdsregisterRepository.scheduledDL("2")
-        assertEquals(renholdsregisterRepository.getAllOrgnrToGodkjentStatusMap()["943001820"], "Godkjent med ansatte")
+        scheduler.scheduledDL("2")
+        assertEquals(renholdsregisterRepository.getGodkjentStatus("943001820"), "Godkjent med ansatte")
+        assertNull(renholdsregisterRepository.getGodkjentStatus("983068824"))
     }
 
 }
