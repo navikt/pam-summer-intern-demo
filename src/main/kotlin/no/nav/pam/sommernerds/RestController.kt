@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class RestController @Autowired constructor(private val repository: RenholdsregisterRepository) {
 
     @GetMapping(value = ["/{orgnummer}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun GetByOrgnummer(@PathVariable("orgnummer") nr: String): Statusbedrift? {
+    fun GetGodkjentStatusByOrgnummer(@PathVariable("orgnummer") nr: String): Statusbedrift? {
         val godkjenningStatus = repository.getGodkjentStatus(nr)
         return Statusbedrift(nr, godkjenningStatus)
     }
