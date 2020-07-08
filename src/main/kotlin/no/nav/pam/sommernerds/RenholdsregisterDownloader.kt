@@ -21,7 +21,7 @@ class RenholdsregisterDownloader {
     private var orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(download("https://www.arbeidstilsynet.no/opendata/renhold.xml"))
 
 
-    private fun download(link: String): String {
+    fun download(link: String): String {
         val xmlAsString = URL(link).readText(Charset.forName("UTF-8"))
         return xmlAsString
     }
@@ -32,17 +32,14 @@ class RenholdsregisterDownloader {
         backoff = Backoff(delay = 3000, maxDelay = 3600000, multiplier = 1.5))
     @Scheduled(cron = "0 0 5 * * *", zone = "Europe/Oslo")
     // @Scheduled(fixedRate = 500000000)
-    fun scheduledDL() {
-        val xmlString = download("https://www.arbeidstilsynet.no/opendata/renhold.xml")
+    fun scheduledDL(link: String) {
+        val xmlString = download(link)
         //logger.error("Failed to download xml")
         orgnrToGodkjentStatusMap = parseAndMapRenholdsbedrifter(xmlString)
     }
 
     @Recover
     fun recover() {
-        val retryAnnotation = RenholdsregisterDownloader::class.annotations.find { it == Retryable::class } as Retryable
-        val test = scheduledDL()::class.java.getAnnotation(Retryable::class.java).maxAttempts
-
         logger.error("Failed to download xml after tries")
     }
 
