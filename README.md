@@ -15,6 +15,7 @@ The initial version of this service was developed by summer interns during the s
 The project requires the following to run (minimum):
 - SpringBoot 2.3.1
 - Gradle 6.5
+- Java 11
 
 ## How to run this application locally
 1. Clone this repository:
