@@ -8,7 +8,7 @@ The initial version of this service was developed by summer interns during the s
 
 ## Architecture
 
-![Alt text](https://i.imgur.com/6TsZaQ3.png "Architecture")
+![Alt text](https://i.imgur.com/U9U7Rob.png "Architecture")
 
  
 ## Dependencies
